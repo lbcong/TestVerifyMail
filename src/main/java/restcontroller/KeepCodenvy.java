@@ -66,7 +66,7 @@ public class KeepCodenvy {
     }
 
     public void openBrowser(String user, String pass) {
-
+        System.out.println("booo"+SystemConfig.statusRun);
         try {
             if (!SystemConfig.statusRun) {
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
