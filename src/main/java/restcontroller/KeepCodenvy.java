@@ -28,7 +28,8 @@ public class KeepCodenvy {
     Codenvy codenvy;
     @Autowired
     CreateWebdriver createWebdriver;
-
+    @Autowired
+    SystemConfig SystemConfig;
     private static WebDriver webDriver = null;
 
     @RequestMapping(value = "/loginCodenvy", method = RequestMethod.GET)
@@ -66,7 +67,7 @@ public class KeepCodenvy {
     }
 
     public void openBrowser(String user, String pass) {
-        System.out.println("booo"+SystemConfig.statusRun);
+        System.out.println("booo" + SystemConfig.statusRun);
         try {
             if (!SystemConfig.statusRun) {
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);

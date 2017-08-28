@@ -9,7 +9,7 @@ public class SystemConfig {
     public static String os;
 
     // kiem tra trang thai ung dung chay lan dau hay lan thu 2
-    public static boolean statusRun = false;
+    public boolean statusRun = false;
 
     public SystemConfig() {
         if (System.getProperty("os.name").contains("Windows")) {

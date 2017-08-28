@@ -28,6 +28,8 @@ public class KeepLiveCodeanywhere {
     CodeAnyWhere codeAnyWhere;
     @Autowired
     CreateWebdriver createWebdriver;
+    @Autowired
+    SystemConfig SystemConfig;
     private static WebDriver webDriver = null;
 
     @RequestMapping(value = "/loginCodeAny", method = RequestMethod.GET)
