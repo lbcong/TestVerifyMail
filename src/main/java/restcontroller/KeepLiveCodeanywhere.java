@@ -66,17 +66,16 @@ public class KeepLiveCodeanywhere {
 
     public void openBrowser(String user, String pass, String id) {
 
-        if (!SystemConfig.statusRun) {
-            webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-            SystemConfig.statusRun = true;
-        }
-
         try {
-            codeAnyWhere.LoginCodeAnyWhere(user, pass, webDriver);
-            String info = codeAnyWhere.getInfo(webDriver, id);
-            if (info != null) {
-                uploadServices.uploadFileTxtToSFtpServer(info, user);
-                System.out.println("upload : done " + info);
+            if (!SystemConfig.statusRun) {
+                webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
+                codeAnyWhere.LoginCodeAnyWhere(user, pass, webDriver);
+                String info = codeAnyWhere.getInfo(webDriver, id);
+                if (info != null) {
+                    uploadServices.uploadFileTxtToSFtpServer(info, user);
+                    System.out.println("upload : done " + info);
+                }
+                SystemConfig.statusRun = true;
             }
 
         } catch (Exception e) {

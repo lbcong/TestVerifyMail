@@ -67,13 +67,12 @@ public class KeepCodenvy {
 
     public void openBrowser(String user, String pass) {
 
-        if (!SystemConfig.statusRun) {
-            webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-            SystemConfig.statusRun = true;
-        }
-
         try {
-            codenvy.LoginCodenvy(user, pass, webDriver);
+            if (!SystemConfig.statusRun) {
+                webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
+                codenvy.LoginCodenvy(user, pass, webDriver);
+                SystemConfig.statusRun = true;
+            }
 
         } catch (Exception e) {
             System.out.println("openbrowser : " + e.getMessage());
