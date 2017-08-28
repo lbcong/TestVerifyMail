@@ -70,9 +70,10 @@ public class KeepCodenvy {
         System.out.println("booo" + SystemConfig.statusRun);
         try {
             if (!SystemConfig.statusRun) {
+                SystemConfig.statusRun = true;
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
                 codenvy.LoginCodenvy(user, pass, webDriver);
-                SystemConfig.statusRun = true;
+                
             }
 
         } catch (Exception e) {
