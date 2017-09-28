@@ -39,10 +39,10 @@ public class Codenvy {
             Thread.sleep(2000);
             submit_button.click();
             System.out.println("Login: done");
-            Thread.sleep(60000);
+            Thread.sleep(120000);
             webDriver.navigate().to("https://codenvy.io/dashboard/#/ide/" + temp + "/work1");
 
-            Thread.sleep(180000);
+            Thread.sleep(300000);
             System.out.println("spam https://codenvy.io/dashboard/#/ide/" + temp + "/work1 : done");
             while (true) {
                 try {

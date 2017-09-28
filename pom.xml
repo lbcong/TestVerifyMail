@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>CrawlerSelenium</groupId>
-    <artifactId>CrawlerSelenium-ubuntu-heroku</artifactId>
+    <artifactId>KeepCodenvyLive</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>CrawlerSelenium-ubuntu-heroku</name>
+    <name>KeepCodenvyLive</name>
 
  
     <dependencies>

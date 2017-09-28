@@ -32,4 +32,7 @@ public interface Constant {
     String binaryGoogleLinux = "/usr/bin/google-chrome";
     String binaryGoogleWindows = "";
 
+    
+    String userCodenvy="hacklslol4@yahoo.com";
+    String passCodenvy="lisatthu35";
 }
