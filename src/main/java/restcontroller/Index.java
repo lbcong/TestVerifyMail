@@ -25,7 +25,7 @@ public class Index {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String greeding() {
-        getInfo();
+//        getInfo();
         return "index";
     }
 

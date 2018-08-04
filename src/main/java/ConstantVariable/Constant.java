@@ -30,7 +30,7 @@ public interface Constant {
     
     String binaryGoogleHeroku = "/app/.apt/usr/bin/google-chrome";
     String binaryGoogleLinux = "/usr/bin/google-chrome";
-    String binaryGoogleWindows = "";
+    String binaryGoogleWindows = "E:\\Soft\\gg\\App\\Chrome-bin\\chrome.exe";
 
     
     String userCodenvy="hacklslol3@yahoo.com";

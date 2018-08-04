@@ -1,11 +1,27 @@
 package restcontroller;
 
+import Utils.Chuyen_tu_Object_sang_byte_de_doc_hoac_ghi_file;
 import ConstantVariable.Constant;
 import Service.CreateWebdriver;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import java.io.IOException;
 
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,33 +32,91 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RestController;
+import static Utils.Doc_file_kieu_binary.readFileBinary;
+import Service.DowloadService;
 
 @RestController
 public class GreedingController {
 
     public static WebDriver webDriver = null;
     @Autowired
+    DowloadService dowloadService;
+    @Autowired
     CreateWebdriver createWebdriver;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String greeding() {
+        return "Hello ";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    public String save() throws IOException {
+        Set<Cookie> cookies = webDriver.manage().getCookies();
+        Iterator<Cookie> itr = cookies.iterator();
+        while (itr.hasNext()) {
+            Cookie cookie = itr.next();
+            System.out.println(cookie.getName() + "\n" + cookie.getPath()
+                    + "\n" + cookie.getDomain() + "\n" + cookie.getValue()
+                    + "\n" + cookie.getExpiry());
+        }
+        File dir = new File("D:\\cookie.txt");
+        byte[] bytes = Chuyen_tu_Object_sang_byte_de_doc_hoac_ghi_file.ObjectToByte(cookies);
+        BufferedOutputStream stream;
+        try {
+            stream = new BufferedOutputStream(
+                    new FileOutputStream(dir));
+            stream.write(bytes);
+            stream.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         return "Hello ";
     }
 
+    @RequestMapping(value = "/opencookie", method = RequestMethod.GET)
+    public String open() {
+
+        try {
+            Set<Cookie> cookies = readFileBinary("D:\\cookie.txt");
+            Iterator<Cookie> itr = cookies.iterator();
+            while (itr.hasNext()) {
+                Cookie cookie = itr.next();
+                System.out.println(cookie.getName() + "\n" + cookie.getPath()
+                        + "\n" + cookie.getDomain() + "\n" + cookie.getValue()
+                        + "\n" + cookie.getExpiry());
+                webDriver.manage().addCookie(cookie);
+            }
+
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        return "Hello";
+    }
+
+    @RequestMapping(value = "/clear", method = RequestMethod.GET)
+    public String clear() {
+
+        try {
+            webDriver.manage().deleteAllCookies();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        return "Hello";
+    }
+
     @RequestMapping(value = "/openbrowser", method = RequestMethod.GET)
-    public String selenium() {
+    public String selenium(HttpServletResponse response) throws IOException {
         String output = "";
         try {
-
-            //test tren heroku
-            webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-            //testVideo();
+            webDriver = createWebdriver.getGoogle(Constant.binaryGoogleWindows);
+//            webDriver.navigate().to("https://appleid.apple.com/account#!&page=create");
+//            WebElement test = webDriver.findElement(By.xpath("//input[@placeholder='birthday']"));
+//            test.click();
+//            test.sendKeys("01/01/2000");
             openTestSite();
-            login("admin", "12345");
-            output = getText();
-
-            //closeBrowser();
             return output;
         } catch (Exception e) {
             e.getMessage();
