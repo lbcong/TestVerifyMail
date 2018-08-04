@@ -29,7 +29,7 @@ public class TestDowloadController {
     byte[] selenium(HttpServletResponse response) throws IOException {
         String output = "";
         try {
-            WebDriver webDriver = createWebdriver.getGoogle(Constant.binaryGoogleWindows);
+            WebDriver webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
             webDriver.navigate().to("https://daynhauhoc.com/");
             return dowloadService.dowloadFile(webDriver);
 
