@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class TestDowloadController {
-
+	public static boolean isFirst=true;
+	public static WebDriver webDriver=null;
     @Autowired
     DowloadService dowloadService;
     @Autowired
@@ -29,7 +30,11 @@ public class TestDowloadController {
     byte[] selenium(HttpServletResponse response) throws IOException {
         String output = "";
         try {
-            WebDriver webDriver = createWebdriver.getGoogle(Constant.binaryGoogleWindows);
+		if(isFirst){
+			webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
+			isFirst = false;
+		}
+            
             webDriver.navigate().to("https://daynhauhoc.com/");
             return dowloadService.dowloadFile(webDriver);
 
