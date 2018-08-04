@@ -34,7 +34,6 @@ public class TestDowloadController {
 			webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
 			isFirst = false;
 		}
-            
             webDriver.navigate().to("https://daynhauhoc.com/");
             return dowloadService.dowloadFile(webDriver);
 
