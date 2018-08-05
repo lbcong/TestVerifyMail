@@ -41,6 +41,8 @@ public class CreateWebdriver {
 
     // neu file binary de o? thuc muc khac' khong phai /user/bin , vi du heroku
     public WebDriver getGoogle(String binaryGoogle) {
+        System.out.println(System.getProperty("java.version"));
+        System.out.println(System.getProperty("java.specification.version"));
         //
         setPathDriver.setPathGoogle();
         //
@@ -58,15 +60,18 @@ public class CreateWebdriver {
                 case "Windows":
                     ChromeOptions optionswindow = new ChromeOptions();
                     optionswindow.addArguments("user-data-dir=C:\\Users\\Hello\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
-                    webDriver = new ChromeDriver(optionswindow);
+                    try {
+                        webDriver = new ChromeDriver();
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
                     break;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            return webDriver;
         }
+        return webDriver;
 
     }
 

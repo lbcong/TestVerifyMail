@@ -31,7 +31,7 @@ public class TestDowloadController {
         String output = "";
         try {
 		if(isFirst){
-			webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
+			webDriver = createWebdriver.getGoogle(Constant.binaryGoogleWindows);
 			isFirst = false;
 		}
             webDriver.navigate().to("https://daynhauhoc.com/");
