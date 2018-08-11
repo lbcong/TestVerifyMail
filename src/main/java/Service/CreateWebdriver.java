@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class CreateWebdriver {
 
     @Autowired
-    SetPathDriver setPathDriver;
+    PathDriver setPathDriver;
     @Autowired
     SystemConfig SystemCofig;
 
@@ -25,7 +25,7 @@ public class CreateWebdriver {
         //
         WebDriver webDriver = null;
         try {
-            System.setProperty(SetPathDriver.webDriverFirefox, SetPathDriver.dirDriverFirefox);
+            System.setProperty(PathDriver.webDriverFirefox, PathDriver.dirDriverFirefox);
             File pathToBinary = new File(binaryFirefox);
             FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
             FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -49,7 +49,7 @@ public class CreateWebdriver {
         WebDriver webDriver = null;
         try {
             //
-            System.setProperty(SetPathDriver.webDriverGoogle, SetPathDriver.dirDriverGoogle);
+            System.setProperty(PathDriver.webDriverGoogle, PathDriver.dirDriverGoogle);
 
             switch (SystemCofig.os) {
                 case "Linux":
