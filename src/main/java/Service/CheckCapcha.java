@@ -20,7 +20,7 @@ public class CheckCapcha {
     @Autowired
     Utils utils;
 
-    public boolean Check(WebDriver webDriver, String capchaText) {
+    public String Check(WebDriver webDriver, String capchaText) {
         try {
             WebElement input_capcha = webDriver.findElement(By.xpath("//input[@type='text']"));
             WebElement button_submit = webDriver.findElement(By.xpath("//input[@type='submit' and @id='iSignupAction']"));
@@ -38,16 +38,16 @@ public class CheckCapcha {
             // ktra nhap capcha dung hay khong
             if ("Creating your mailbox".equals(webDriver.getTitle())) {
                 System.out.println("nhap than cong");
-                return true;
+                return "nhap than cong";
             } else {
                 System.out.println("nhap that bai");
-                return false;
+                return "nhap that bai";
             }
 
         } catch (Exception ex) {
             // ip loi
             System.out.println(ex.getMessage());
-            return false;
+            return ex.getMessage();
         }
     }
 

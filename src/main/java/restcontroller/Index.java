@@ -34,11 +34,8 @@ public class Index {
     public @ResponseBody String setCap(
             @RequestParam(value = "captext", defaultValue = "", required = false) String captext
     ) {
-        if(checkCapcha.Check(webDriver, captext)){
-            return "success";
-        }else{
-            return "fail";
-        }
+        return checkCapcha.Check(webDriver, captext);
+            
     }
 
     @RequestMapping(value = "/getCapTypeBase64", method = RequestMethod.GET)
@@ -65,7 +62,6 @@ public class Index {
             if (!flag) {
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
                 return codenvy.Start(webDriver, "samuraiJAVhd50cmBBc");
-
             }
         } catch (Exception e) {
             e.getMessage();
