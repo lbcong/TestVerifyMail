@@ -27,7 +27,7 @@ public class CheckCapcha {
             input_capcha.sendKeys(capchaText);
             Thread.sleep(2000);
             button_submit.click();
-            // ktra nhap capcha dung hay khong
+            // doi load trang
             while (true) {
                 try {
                     input_capcha = webDriver.findElement(By.xpath(Constant.xpathCapcha));
@@ -35,6 +35,7 @@ public class CheckCapcha {
                     break;
                 }
             }
+            // ktra nhap capcha dung hay khong
             if ("Creating your mailbox".equals(webDriver.getTitle())) {
                 System.out.println("nhap than cong");
                 return true;

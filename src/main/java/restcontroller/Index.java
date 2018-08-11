@@ -46,7 +46,7 @@ public class Index {
         try {
             if (!flag) {
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-                codenvy.Start(webDriver, "cong5testautocapchakkk");
+                codenvy.Start(webDriver, "samuraiJAVhd50cmBBc");
 
                 // viet code gui capcha base64 string sang 2capcha
             }
@@ -64,7 +64,7 @@ public class Index {
         try {
             if (!flag) {
                 webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-                return codenvy.Start(webDriver, "cong5testautocapchaff0x");
+                return codenvy.Start(webDriver, "samuraiJAVhd50cmBBc");
 
             }
         } catch (Exception e) {
@@ -76,11 +76,5 @@ public class Index {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
-    }
-
-    public String getInfo() {
-        String output = "";
-
-        return null;
     }
 }
