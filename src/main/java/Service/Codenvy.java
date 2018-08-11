@@ -5,77 +5,95 @@
  */
 package Service;
 
+import Utils.Utils;
 import java.util.Random;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Codenvy {
 
-    public boolean LoginCodenvy(String username, String passw, WebDriver webDriver) {
-        Random rd = new Random();
-        int r = 0;
-        boolean status = false;
+    @Autowired
+    Utils utils;
+    @Autowired
+    DowloadService dowloadService;
+
+    public byte[] Start(WebDriver webDriver, String username) {
+        boolean flag_wait = false;
+        String str_username = username;
+//        String str_password = "Ahfweh123@#$";
+        String str_password = "Zxcv123123";
+        String str_LastName = "cailong";
+        String str_FirstName = "cailong1";
         try {
-            Thread.sleep(2000);
-            String array[] = username.split("@");
-            String temp = array[0];
-
-            webDriver.navigate().to("https://codenvy.io/site/login");
-            Thread.sleep(5000);
-            WebElement user = webDriver.findElement(By.id("username"));
-            Thread.sleep(2000);
-            WebElement password = webDriver.findElement(By.xpath("//input[@name='password']"));
-            Thread.sleep(2000);
-            WebElement submit_button = webDriver.findElement(By.xpath("//input[@value='Login']"));
-            Thread.sleep(2000);
-            user.sendKeys(username);
-            Thread.sleep(2000);
-            password.sendKeys(passw);
-            Thread.sleep(2000);
-            submit_button.click();
-            System.out.println("Login: done");
-            Thread.sleep(120000);
-            webDriver.navigate().to("https://codenvy.io/dashboard/#/ide/" + temp + "/work1");
-
-            Thread.sleep(300000);
-            System.out.println("spam https://codenvy.io/dashboard/#/ide/" + temp + "/work1 : done");
-            while (true) {
-                try {
-                    r = rd.nextInt(9999);
-                    Thread.sleep(2000);
-                    System.out.println("run spam");
-                    Actions myAction = new Actions(webDriver);
-
-                    Thread.sleep(1000);
-                    myAction.moveByOffset(794, 200).build().perform();
-                    Thread.sleep(1000);
-                    if (!status) {
-                        myAction.keyDown(Keys.ALT).keyDown(Keys.SHIFT).sendKeys("N").keyUp(Keys.ALT).keyUp(Keys.SHIFT).build().perform();
-                        Thread.sleep(1000);
-                        myAction.sendKeys("wefwef4we3" + r).build().perform();
-                        Thread.sleep(1000);
-                        myAction.sendKeys(Keys.ENTER).perform();
-                        status = true;
-                    }
-
-                    Thread.sleep(1000);
-                    myAction.sendKeys("delsdfeete" + r).build().perform();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+            webDriver.get("https://outlook.live.com/owa/?nlp=1&signup=1");
+            // wait
+            while (!flag_wait) {
+                flag_wait = utils.waitForPresence(webDriver, 5000, "//input[@id='MemberName']");
             }
+            flag_wait = false;
+            WebElement input_signin = webDriver.findElement(By.xpath("//input[@id='MemberName']"));
+            input_signin.sendKeys(str_username);
+            webDriver.findElement(By.xpath("//input[@id='iSignupAction']")).click();
+            // wait
+            while (!flag_wait) {
+                flag_wait = utils.waitForPresence(webDriver, 5000, "//input[@id='PasswordInput']");
+            }
+            flag_wait = false;
+            WebElement PasswordInput = webDriver.findElement(By.xpath("//input[@id='PasswordInput']"));
+            PasswordInput.sendKeys(str_password);
+            webDriver.findElement(By.xpath("//input[@id='iSignupAction']")).click();
+            // wait
+            while (!flag_wait) {
+                flag_wait = utils.waitForPresence(webDriver, 5000, "//input[@id='LastName']");
+            }
+            flag_wait = false;
+            WebElement LastName = webDriver.findElement(By.xpath("//input[@id='LastName']"));
+            LastName.sendKeys(str_LastName);
+            WebElement FirstName = webDriver.findElement(By.xpath("//input[@id='FirstName']"));
+            FirstName.sendKeys(str_FirstName);
+            webDriver.findElement(By.xpath("//input[@id='iSignupAction']")).click();
 
+            // wait
+            while (!flag_wait) {
+                flag_wait = utils.waitForPresence(webDriver, 5000, "//select[@id='BirthDay']");
+            }
+            flag_wait = false;
+            WebElement Body = webDriver.findElement(By.tagName("body"));
+            String languae = Body.getAttribute("lang");
+            Select BirthDay = new Select(webDriver.findElement(By.xpath("//select[@id='BirthDay']")));
+            Select BirthMonth = new Select(webDriver.findElement(By.id("BirthMonth")));
+            Select BirthYear = new Select(webDriver.findElement(By.id("BirthYear")));
+            if (languae.equals("vi-VN")) {
+                BirthDay.selectByVisibleText("3");
+                BirthMonth.selectByVisibleText("Tháng Ba");
+                BirthYear.selectByVisibleText("1991");
+            } else {
+                BirthDay.selectByVisibleText("3");
+                BirthMonth.selectByVisibleText("May");
+                BirthYear.selectByVisibleText("1991");
+            }
+            webDriver.findElement(By.xpath("//input[@id='iSignupAction']")).click();
+
+            // wait
+            while (!flag_wait) {
+                flag_wait = utils.waitForPresence(webDriver, 5000, "//img[@aria-label='Visual Challenge']");
+            }
+            flag_wait = false;
+
+            byte[] rs = dowloadService.dowloadImgTypeByte(webDriver);
+            return rs;
         } catch (Exception e) {
-            System.out.println("Login:" + e.getMessage());
+            System.out.println("exception:" + e.getMessage());
+            webDriver.quit();
+            return null;
         }
-        return false;
-
     }
 
 }

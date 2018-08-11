@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ConstantVariable.Constant;
 
 @Service
-public class SetPathDriver {
+public class PathDriver {
 
     @Autowired
     ServletContext servletContext;
@@ -20,7 +20,7 @@ public class SetPathDriver {
     public static String webDriverGoogle;
     public static String dirDriverGoogle;
 
-    public SetPathDriver() {
+    public PathDriver() {
 
     }
 

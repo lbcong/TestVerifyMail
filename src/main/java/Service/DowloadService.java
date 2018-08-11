@@ -5,6 +5,7 @@
  */
 package Service;
 
+import ConstantVariable.Constant;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.Base64;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +25,34 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DowloadService implements Serializable {
-
-    public byte[] dowloadFile( WebDriver webDriver) throws IOException {
+    public String dowloadImgTypeBase64( WebDriver webDriver) throws IOException {
+        OutputStream outStream = null;
+        try {
+            byte[] imageInByte;
+            BufferedImage originalImage = getBufferedImage(webDriver);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(originalImage, "png", baos);
+            baos.flush();
+            imageInByte = baos.toByteArray();
+            // chuyen tu byte[] sang string 64
+            String base64Encoded = Base64.getEncoder().encodeToString(imageInByte);
+            // chuyen tu string 64 sang byte[]
+//            byte[] decoded = Base64.getDecoder().decode(base64Encoded);
+            
+            baos.close();
+            return base64Encoded;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
+    public byte[] dowloadImgTypeByte( WebDriver webDriver) throws IOException {
         OutputStream outStream = null;
         try {
             byte[] imageInByte;
@@ -46,7 +70,7 @@ public class DowloadService implements Serializable {
     }
 
     public BufferedImage getBufferedImage(WebDriver webDriver) throws IOException {
-        WebElement ele = webDriver.findElement(By.id("site-logo"));
+        WebElement ele = webDriver.findElement(By.xpath(Constant.xpathCapcha));
         File screenshot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         BufferedImage fullImg = ImageIO.read(screenshot);
 
