@@ -5,12 +5,13 @@
  */
 package Bean;
 
-import Service.CheckCapcha;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import Service.Codenvy;
 import Service.CreateWebdriver;
 import Service.DowloadService;
+import Service.GetTextFromGit;
+import Service.Mail10Minute;
 import Service.PathDriver;
 import Utils.Utils;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,15 +26,20 @@ import org.springframework.context.annotation.ComponentScans;
 public class SpringConfig {
 
     @Bean
-    public CheckCapcha checkCapcha() {
-        return new CheckCapcha();
+    public GetTextFromGit getTextFromGit() {
+        return new GetTextFromGit();
     }
-    
+
+    @Bean
+    public Mail10Minute mail10Minute() {
+        return new Mail10Minute();
+    }
+
     @Bean
     public DowloadService dowloadService() {
         return new DowloadService();
     }
-    
+
     @Bean
     public Codenvy codenvy() {
         return new Codenvy();

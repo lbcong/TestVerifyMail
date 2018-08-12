@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package Utils;
-
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -51,6 +48,17 @@ public class Utils {
         }
     }
 
+    public void waitForUrlLoading(WebDriver driver, String targetXpath) {
+        WebElement element = null;
+        while (true) {
+            try {
+                element = driver.findElement(By.xpath(targetXpath));
+            } catch (Exception e) {
+                break;
+            }
+        }
+    }
+
     public boolean isClickable(WebElement el, WebDriver driver) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 6);
@@ -62,12 +70,11 @@ public class Utils {
     }
 
     public void waitForPageLoaded(WebDriver driver) {
-        ExpectedCondition<Boolean> expectation = new
-                ExpectedCondition<Boolean>() {
-                    public Boolean apply(WebDriver driver) {
-                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
-                    }
-                };
+        ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+            }
+        };
         try {
             Thread.sleep(1000);
             WebDriverWait wait = new WebDriverWait(driver, 30);

@@ -3,14 +3,8 @@ package restcontroller;
 import Utils.Chuyen_tu_Object_sang_byte_de_doc_hoac_ghi_file;
 import ConstantVariable.Constant;
 import Service.CreateWebdriver;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.io.IOException;

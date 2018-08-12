@@ -6,7 +6,6 @@
 package restcontroller;
 
 import ConstantVariable.Constant;
-import Service.CheckCapcha;
 import Service.Codenvy;
 import Service.CreateWebdriver;
 import org.openqa.selenium.WebDriver;
@@ -26,47 +25,30 @@ public class Index {
     CreateWebdriver createWebdriver;
     @Autowired
     Codenvy codenvy;
-    @Autowired
-    CheckCapcha checkCapcha;
     WebDriver webDriver;
 
-    @RequestMapping(value = "/setCap", method = RequestMethod.GET)
-    public @ResponseBody String setCap(
-            @RequestParam(value = "captext", defaultValue = "", required = false) String captext
-    ) {
-        return checkCapcha.Check(webDriver, captext);
-            
-    }
-
-    @RequestMapping(value = "/getCapTypeBase64", method = RequestMethod.GET)
-    public String getCapTypeBase64() {
-        try {
-            if (!flag) {
-                webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-                codenvy.Start(webDriver, "samuraiJAVhd50cmBBc");
-
-                // viet code gui capcha base64 string sang 2capcha
-            }
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return "index";
-    }
-
-    @RequestMapping(value = "/getCapTypeImg",
-            method = RequestMethod.GET,
-            produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/beginVerify", method = RequestMethod.GET)
     public @ResponseBody
-    byte[] getCapTypeImg() {
+    String getCapTypeBase64() {
         try {
             if (!flag) {
-                webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
-                return codenvy.Start(webDriver, "samuraiJAVhd50cmBBc");
+                Thread startThread = new Thread() {
+                    @Override
+                    public void run() {
+                        flag = true;
+                        try {
+                            webDriver = createWebdriver.getGoogle(Constant.binaryGoogleHeroku);
+                            codenvy.Start(webDriver);
+                        } catch (Exception e) {
+                        }
+                    }
+                };
+                startThread.start();
             }
         } catch (Exception e) {
-            e.getMessage();
+            return e.getMessage();
         }
-        return null;
+        return "running";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
